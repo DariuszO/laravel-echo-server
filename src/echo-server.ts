@@ -23,7 +23,9 @@ export class EchoServer {
             redis: {},
             sqlite: {
                 databasePath: '/database/laravel-echo-server.sqlite'
-            }
+            },
+            listenWhishper:true,
+            prefixWhishper:"whishper."
         },
         devMode: false,
         host: null,
