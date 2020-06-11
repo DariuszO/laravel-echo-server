@@ -1,6 +1,6 @@
 {
   "name": "laravel-echo-server-whisper",
-  "version": "1.6.3",
+  "version": "1.6.2-alfa-0",
   "description": "Laravel Echo Node JS Server for Socket.io with listen Whisper",
   "repository": {
     "type": "git",
