@@ -2,7 +2,6 @@ import { PresenceChannel } from './presence-channel';
 import { PrivateChannel } from './private-channel';
 import { Log } from './../log';
 let Redis = require('ioredis');
-let pub = new Redis();
 export class Channel {
     /**
      * Channels and patters for private channels.
@@ -25,9 +24,15 @@ export class Channel {
     presence: PresenceChannel;
 
     /**
+     * Redis publish client.
+     */
+    private _pub: any;
+
+    /**
      * Create a new channel instance.
      */
     constructor(private io, private options) {
+        this._pub = new Redis(options.databaseConfig.redis);
         this.private = new PrivateChannel(options);
         this.presence = new PresenceChannel(io, options);
 
@@ -65,7 +70,7 @@ export class Channel {
                 this.isPrivate(data.channel) &&
                 this.isInChannel(socket, data.channel)) {
                 if(this.options.databaseConfig.listenWhishper === true){
-                    pub.publish(`${this.options.databaseConfig.prefixWhishper}.${data.channel}`, JSON.stringify({event: data.event, data: data.data}));
+                    this._pub.publish(`${this.options.databaseConfig.prefixWhishper}.${data.channel}`, JSON.stringify({event: data.event, data: data.data}));
                 }
                 this.io.sockets.connected[socket.id]
                     .broadcast.to(data.channel)
