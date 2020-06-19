@@ -18,7 +18,7 @@ official docs: <https://laravel.com/docs/master/broadcasting>
 Install npm package globally with the following command:
 
 ``` shell
-$   npm install -g laravel-echo-server
+$   npm install -g laravel-echo-server-whisper
 ```
 
 ### Initialize with CLI Tool
@@ -84,6 +84,8 @@ Edit the default configuration of the server by adding options to your **laravel
 | `database`         | `redis`              | Database used to store data that should persist, like presence channel members. Options are currently `redis` and `sqlite` |
 | `databaseConfig`   |  `{}`                | Configurations for the different database drivers [Example](#database) |
 | `devMode`          | `false`              | Adds additional logging for development purposes |
+| `listenWhishper`   | `false`              | Publish client events to redis |
+| `prefixWhishper`   | `whishper`           | Publish client events to redis channels `whishper.` |
 | `host`             | `null`               | The host of the socket.io server ex.`app.dev`. `null` will accept connections on any IP-address |
 | `port`             | `6001`               | The port that the socket.io server should run on |
 | `protocol`         | `http`               | Must be either `http` or `https` |
@@ -110,6 +112,7 @@ file, the following options can be overridden:
 - `sslCertPath`: `LARAVEL_ECHO_SERVER_SSL_CERT`
 - `sslPassphrase`: `LARAVEL_ECHO_SERVER_SSL_PASS`
 - `sslCertChainPath`: `LARAVEL_ECHO_SERVER_SSL_CHAIN`
+- `prefixWhishper`: `LARAVEL_ECHO_SERVER_REDIS_WHISHPER_PREFIX`
 
 
 ### Running with SSL
@@ -153,6 +156,13 @@ The Laravel Echo Server subscribes to incoming events with two methods: Redis & 
 ### Redis
 
  Your core application can use Redis to publish events to channels. The Laravel Echo Server will subscribe to those channels and broadcast those messages via socket.io.
+
+### Listen whishper from Laravel
+ ```
+Redis::connection('subscriber')->psubscribe(['*'], function ($message, $channel) {
+            
+     });
+```
 
 ### Http
 
