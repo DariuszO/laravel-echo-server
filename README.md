@@ -115,6 +115,9 @@ file, the following options can be overridden:
 - `prefixWhishper`: `LARAVEL_ECHO_SERVER_REDIS_WHISHPER_PREFIX`
 
 
+### Running with PM2 Cluster
+*   ``instance_number = process.env.NODE_APP_INSTANCE``
+*   ``laravel-echo-server.json.{instance_number}.lock``
 ### Running with SSL
 
 *   Your client side implementation must access the socket.io client from https.

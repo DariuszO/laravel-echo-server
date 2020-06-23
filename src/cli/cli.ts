@@ -294,7 +294,7 @@ export class Cli {
             options.devMode =
                 `${yargs.argv.dev || options.devMode || false}` === "true";
 
-            //For start when PM2 model clusters
+            //Run with PM2 clusters
             let lockFilePostFix = `${path.basename(configFile, ".json")}.lock`
             if (process.env.NODE_APP_INSTANCE != undefined && _.toInteger(process.env.NODE_APP_INSTANCE) > 0) {
                 lockFilePostFix = `${path.basename(configFile, ".json")}.${process.env.NODE_APP_INSTANCE}.lock`
