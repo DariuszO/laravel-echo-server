@@ -1,11 +1,12 @@
 const fs = require("fs");
 const path = require("path");
 const colors = require("colors");
+const _ = require("lodash");
 const echo = require("./../../dist");
 const inquirer = require("inquirer");
 const crypto = require("crypto");
 
-import ErrnoException = NodeJS.ErrnoException;
+
 
 /**
  * Laravel Echo Server CLI
@@ -293,9 +294,14 @@ export class Cli {
             options.devMode =
                 `${yargs.argv.dev || options.devMode || false}` === "true";
 
+            //For start when PM2 model clusters
+            let lockFilePostFix = `${path.basename(configFile, ".json")}.lock`
+            if (process.env.NODE_APP_INSTANCE != undefined && _.toInteger(process.env.NODE_APP_INSTANCE) > 0) {
+                lockFilePostFix = `${path.basename(configFile, ".json")}.${process.env.NODE_APP_INSTANCE}.lock`
+            }
             const lockFile = path.join(
                 path.dirname(configFile),
-                path.basename(configFile, ".json") + ".lock"
+                lockFilePostFix
             );
 
             if (fs.existsSync(lockFile)) {
