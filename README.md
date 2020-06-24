@@ -118,6 +118,7 @@ file, the following options can be overridden:
 ### Running with PM2 Cluster
 *   ``instance_number = process.env.NODE_APP_INSTANCE``
 *   ``laravel-echo-server.json.{instance_number}.lock``
+*    For correct memory limit reload  ``laravel-echo-server start --force`` 
 ### Running with SSL
 
 *   Your client side implementation must access the socket.io client from https.
